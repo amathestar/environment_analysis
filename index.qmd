@@ -1,0 +1,115 @@
+---
+title: "Environmental_Project"
+author: "Ama Agyemang"
+---
+
+A governement agency has provided environmental data from multiple cities to be monitored and analysed.
+
+Loading the data to inspect its structure and explore it
+
+```{r}
+#importing package to enable us read the data
+library(readr)
+
+#importing package to enable us explore the dataset
+library(dplyr)
+
+
+library(visdat)
+
+library(lubridate)
+
+#import the environmental data set 
+envdata <- read_csv("data/Environmental_Data.csv")
+
+
+str(envdata)
+head(envdata)
+tail(envdata)
+
+glimpse(envdata)
+summary(envdata)
+
+#Viewing 10% of random data within the dataset
+sample_frac(envdata, 0.1)
+
+ncol(envdata)
+nrow(envdata)
+dim(envdata)
+names(envdata)
+
+#This is to find out if the dataset has missing values
+vis_miss(envdata)
+
+
+
+
+```
+
+Calculating the monthly average temperature for each city
+
+```{r}
+
+  avg_temp_per_city<- envdata %>%
+  mutate(YearMonth = floor_date(Date, "month")) %>%
+  group_by(City, YearMonth)  %>%
+  summarise(Average_temperature = mean(Temperature))
+
+ 
+  View(avg_temp_per_city)
+ 
+  
+```
+
+Viewing the temperature trends across cities using the line plot
+
+```{r}
+
+
+library(ggplot2)
+
+    avg_temp_per_city %>% 
+    ggplot(aes(x=YearMonth, y=Average_temperature, colour=City)) +
+    geom_point()+
+    geom_line()+
+    labs(title="Temperature trends across cities",
+         x ="Date (Year-Months)",
+         y ="Average Temperature") +
+    theme_minimal()
+```
+
+
+
+Histogram to visualize the distribution of daily rainfall across all cities. Discuss trends & identify extreme values.
+
+```{r}
+
+  envdata %>%
+  ggplot(aes(x = Rainfall, fill = City)) +
+  geom_histogram(binwidth = 5, alpha = 0.7, position = "identity") +
+  labs(title = "Histogram showing Distribution of daily rainfall across all cities",
+       x = "Cities", 
+       y = "Rainfall") +
+  theme_minimal()
+
+```
+
+
+Scatterplot to analyze the relationship between temperature and humidity. Add a regression
+line to interpret the correlation.
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
