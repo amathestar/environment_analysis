@@ -16,3 +16,4 @@ The agency is particularly interested in understanding
 3. anomalies in the data.
 
 My analysis was done in R and it supports policy-making for climate adaptation and disaster management.
+View the report in the Quarto Mark down file. 
